@@ -1,0 +1,354 @@
+@import "tailwindcss";
+
+/* ── Design tokens ── */
+:root {
+  color-scheme: dark;
+  --bg-primary: #06060f;
+  --bg-surface: rgba(255, 255, 255, 0.04);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --accent-violet: #8b5cf6;
+  --accent-violet-glow: rgba(139, 92, 246, 0.35);
+  --accent-js: #facc15;
+  --accent-py: #38bdf8;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+}
+
+/* ── Base ── */
+html,
+body {
+  min-height: 100dvh;
+}
+
+body {
+  background: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(56, 189, 248, 0.08), transparent);
+  color: var(--text-primary);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 999px; }
+
+/* ── Glass panel ── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* ── Glow ring for focus ── */
+.focus-glow:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-violet), 0 0 20px var(--accent-violet-glow);
+}
+
+/* ── Primary gradient button ── */
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: white;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 50%, #7c3aed 100%);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.45);
+}
+
+.btn-primary:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ── Team colors ── */
+.team-js {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #1a1a1a;
+}
+.team-python {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+  color: white;
+}
+
+/* ── Score card ── */
+.score-card {
+  border-radius: var(--radius-xl);
+  padding: 1rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.score-card::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08));
+  pointer-events: none;
+}
+
+/* ── Confetti keyframes ── */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti-bit {
+  position: absolute;
+  top: -5%;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  animation: confetti-fall linear infinite;
+  will-change: transform;
+}
+
+/* ── Countdown ring ── */
+@keyframes countdown-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.countdown-ring {
+  animation: countdown-pulse 1s ease-in-out infinite;
+}
+
+/* ── Fade in ── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.animate-fade-in-delay-2 {
+  animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+.animate-fade-in-delay-3 {
+  animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+/* ── Tap ripple ── */
+@keyframes tap-ripple {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.01); }
+  100% { transform: scale(0.95); }
+}
+
+.tap-btn {
+  animation: tap-ripple 0.6s ease-in-out infinite;
+  background: linear-gradient(145deg, #8b5cf6 0%, #7c3aed 40%, #6d28d9 100%);
+  box-shadow: 0 0 60px rgba(139, 92, 246, 0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: box-shadow 0.15s;
+}
+
+.tap-btn:active {
+  animation: none;
+  transform: scale(0.97);
+  box-shadow: 0 0 80px rgba(139, 92, 246, 0.6), inset 0 2px 0 rgba(255,255,255,0.15);
+}
+
+/* ── Quiz option card ── */
+.quiz-option {
+  border-radius: var(--radius-xl);
+  padding: 1.15rem 1.25rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.quiz-option:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.quiz-option:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.quiz-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.quiz-option.selected {
+  border-color: white;
+  box-shadow: 0 0 24px rgba(255,255,255,0.15);
+}
+
+/* ── Vote button ── */
+.vote-btn {
+  border-radius: var(--radius-2xl);
+  padding: 2.5rem 1rem;
+  font-weight: 800;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+}
+
+.vote-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+}
+
+.vote-btn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.vote-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.vote-btn.selected {
+  border-color: white;
+  box-shadow: 0 0 30px rgba(255,255,255,0.12);
+}
+
+/* ── Podium bar ── */
+@keyframes podium-rise {
+  from { height: 0; }
+  to { height: var(--bar-height); }
+}
+
+.podium-bar {
+  animation: podium-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* ── Progress bar fill ── */
+.progress-fill {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 999px;
+}
+
+/* ── Input styling ── */
+.input-field {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  padding: 0.85rem 1.25rem;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  outline: none;
+  transition: all 0.25s;
+}
+
+.input-field::placeholder {
+  color: var(--text-muted);
+}
+
+.input-field:focus {
+  border-color: var(--accent-violet);
+  box-shadow: 0 0 0 3px var(--accent-violet-glow);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Shimmer text effect ── */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(90deg, #8b5cf6, #c084fc, #e879f9, #c084fc, #8b5cf6);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ── Scoreboard number animation ── */
+.score-num {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Error alert ── */
+.error-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  color: #fb7185;
+  font-weight: 500;
+  animation: fade-in-up 0.3s ease both;
+}
